@@ -57,7 +57,6 @@ module.exports.fromStream = function fromStream(stream, callback) {
     });
 
     stream.on('end', function() {
-        console.log('here');
         callback(instance);
     });
 };

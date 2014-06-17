@@ -28,7 +28,7 @@ var solve = function solve(instance, watchlist, assignment, d, verbose) {
             console.log('Trying ' + instance.variables[d] + ' = ' + a);
         }
         assignment[variable] = a;
-        falsified_literal = new Literal(variable, !a);
+        falsified_literal = new Literal(variable, a);
         if (watchlist.updateWatchlist(instance, falsified_literal, assignment, verbose)) {
             if (solve(instance, watchlist, assignment, d + 1, verbose)) {
                 return assignment;
