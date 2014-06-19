@@ -37,7 +37,9 @@ SATInstance.prototype.clauseToString = function clauseToString(clause) {
 };
 
 SATInstance.prototype.assignmentToString = function assignmentToString(assignment) {
-    return JSON.stringify(assignment);
+    return _.map(assignment, function(assigned, variable) {
+        return (new Literal(variable, !assigned)).toString();
+    }).join(' ');
 };
 
 module.exports.Literal = Literal;

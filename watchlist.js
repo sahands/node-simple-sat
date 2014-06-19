@@ -29,7 +29,8 @@ Watchlist.prototype.updateWatchlist = function updateWatchlist(instance, falsifi
     _this = this;
     var findAlternativeForClause = function findAlternativeForClause(clause) {
         return _.find(clause, function(literal) {
-            return assignment[literal.variable] === null || assignment[literal.variable] === literal.negated;
+            var a = !literal.negated;
+            return assignment[literal.variable] === null || assignment[literal.variable] === a;
         });
     };
     var key = falsified_literal.toString();
@@ -39,6 +40,9 @@ Watchlist.prototype.updateWatchlist = function updateWatchlist(instance, falsifi
             console.log('Finding alternative for ' + clause);
         }
         var alternative = findAlternativeForClause(clause);
+        if (verbose) {
+            _this.dump();
+        }
         if (alternative) {
             if (verbose) {
                 console.log('Found alternative ' + alternative + ' for ' + clause);
@@ -48,7 +52,6 @@ Watchlist.prototype.updateWatchlist = function updateWatchlist(instance, falsifi
         } else {
             if (verbose) {
                 console.log('Clause ' + clause + ' contradicted');
-                _this.dump();
             }
             return false;
         }

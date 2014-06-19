@@ -6,7 +6,7 @@ var recursiveSatSolve = require('./recursive_solver');
 // process.exit();
 
 instance.fromStream(process.stdin, function(instance) {
-    assignment = recursiveSatSolve(instance, true);
+    assignment = recursiveSatSolve(instance, false);
     if (assignment) {
         console.log(instance.assignmentToString(assignment));
     } else {
