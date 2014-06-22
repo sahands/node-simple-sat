@@ -1,8 +1,6 @@
 var _ = require('lodash');
 var Watchlist = require('./watchlist');
-var Literal = require('./instance').Literal;
-
-
+var Literal = require('./satinstance').Literal;
 
 /**
  * Recursively solve SAT by assigning to variables d, d+1, ..., n-1. Assumes
@@ -23,7 +21,7 @@ var solve = function solve(instance, watchlist, assignment, d, verbose) {
 
     var variable = instance.variables[d];
 
-    for(var a = false; ; a = !a) {
+    for (var a = false;; a = !a) {
         if (verbose) {
             console.log('Trying ' + instance.variables[d] + ' = ' + a);
         }
@@ -34,7 +32,7 @@ var solve = function solve(instance, watchlist, assignment, d, verbose) {
                 return assignment;
             }
         }
-        if(a) break;
+        if (a) break;
     }
 
     assignment[variable] = null;
@@ -42,7 +40,7 @@ var solve = function solve(instance, watchlist, assignment, d, verbose) {
 };
 
 
-module.exports = function recursiveSatSolve(instance, verbose) {
+module.exports.solve = function recursiveSatSolve(instance, verbose) {
     var assignment = {};
     _.forEach(instance.variables, function(variable) {
         assignment[variable] = null;

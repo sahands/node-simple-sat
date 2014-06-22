@@ -15,20 +15,29 @@ function SATInstance() {
     this.clauses = [];
 }
 
-SATInstance.prototype.parseAndAddClause = function parseAndAddClause(sourceLine) {
+SATInstance.prototype.parseAndAddClauses = function parseAndAddClauses(sourceLine) {
     _this = this;
+    if (sourceLine.length === 0 || sourceLine[0] === '#') {
+        return;
+    }
     var line = sourceLine.replace(/(^\s+|\s+$)/g, '');
-    var clause = [];
-    _.forEach(line.split(/\s+/), function(literal) {
-        var negated = (literal[0] === '~') ? 1 : 0;
-        var variable = literal.substring(negated);
-        if (!_.contains(_this.variables, variable)) {
-            _this.variables.push(variable);
+    _.forEach(line.split(';'), function(clauseSource) {
+        clauseSource = clauseSource.trim();
+        if(clauseSource.length === 0) {
+            return;
         }
-        var literalObject = new Literal(variable, negated);
-        clause.push(literalObject);
+        var clause = [];
+        _.forEach(clauseSource.split(/\s+/), function(literal) {
+            var negated = (literal[0] === '~') ? 1 : 0;
+            var variable = literal.substring(negated);
+            if (!_.contains(_this.variables, variable)) {
+                _this.variables.push(variable);
+            }
+            var literalObject = new Literal(variable, negated);
+            clause.push(literalObject);
+        });
+        _this.clauses.push(clause);
     });
-    _this.clauses.push(clause);
 };
 
 
@@ -53,9 +62,7 @@ module.exports.fromStream = function fromStream(stream, callback) {
     });
 
     rd.on('line', function(line) {
-        if (line.length > 0 && line[0] !== '#') {
-            instance.parseAndAddClause(line);
-        }
+        instance.parseAndAddClauses(line);
     });
 
     stream.on('end', function() {
