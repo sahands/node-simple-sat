@@ -11,6 +11,10 @@
         "email": "sahands@gmail.com",
         "url": "http://sahandsaba.com/"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sahands/node-simple-sat.git"
+    },
     "license": "MIT",
     "dependencies": {
         "lodash": "^2.4.1"

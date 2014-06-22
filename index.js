@@ -1,5 +1,5 @@
 var satinstance = require('./satinstance');
-var solver = require('./recursive_solver');
+var solver = require('./solver');
 
 
 satinstance.fromStream(process.stdin, function(instance) {
